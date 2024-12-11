@@ -161,8 +161,9 @@
                                                                                                         <td> @currency($product->total)
                                                                                                         </td>
                                                                                                     </tr>
+                                                                                                
+                                                                                                //-> generate list data detail pop up data
                                                                                                 @endforeach
-
                                                                                                 <tr>
                                                                                                     <td colspan="2">
                                                                                                         <h5
@@ -178,6 +179,18 @@
                                                                                                             <span
                                                                                                                 class="badge rounded-pill bg-danger-subtle text-danger font-size-12">{{ $trx->jasa_pasang }}</span>
                                                                                                         @endif
+
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td colspan="2">
+                                                                                                        <h5
+                                                                                                            class="font-size-14 m-0">
+                                                                                                             Nomor Telepon :
+                                                                                                        </h5>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <h5 class= "font-size-14 mb-0"> {{ $trx->user()->get()->implode('nohp') }}</h5>
 
                                                                                                     </td>
                                                                                                 </tr>

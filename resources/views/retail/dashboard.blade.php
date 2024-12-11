@@ -240,6 +240,21 @@
 
                                                                                                     </td>
                                                                                                 </tr>
+
+                                                                                                <tr>
+                                                                                                    <td colspan="2">
+                                                                                                        <h5
+                                                                                                            class="font-size-14 m-0">
+                                                                                                             Nomor Telepon :
+                                                                                                        </h5>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <h5 class= "font-size-14 mb-0"> {{ $trx->user()->get()->implode('nohp') }}</h5>
+
+                                                                                                    </td>
+                                                                                                </tr>
+
+                                                                                                
                                                                                                 <tr>
                                                                                                     <td colspan="2">
                                                                                                         <h5
