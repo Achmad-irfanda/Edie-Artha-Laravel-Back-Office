@@ -15,7 +15,8 @@ class ProductResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $image = 'http://192.168.0.105:8000'  . asset($this->thumbnail);
+        // $image = 'http://192.168.0.105:8000'  . asset($this->thumbnail);
+        $image = 'http://10.0.2.2:8000'  . asset($this->thumbnail);
         return [
             'id' => $this->id,
             'kode' => $this->kode,

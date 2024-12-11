@@ -19,6 +19,8 @@ use App\Http\Controllers\API\TrxWorkshopController;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
+
+    //profile
     Route::post('logout', [AuthController::class, 'logout']);
     Route::get('user', [AuthController::class, 'user']);
     Route::post('change-password', [AuthController::class, 'changePassword']);
