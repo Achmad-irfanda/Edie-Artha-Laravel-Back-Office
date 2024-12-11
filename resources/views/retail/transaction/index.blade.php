@@ -190,7 +190,18 @@
                                                                                                         </h5>
                                                                                                     </td>
                                                                                                     <td>
-                                                                                                        <h5 class= "font-size-14 mb-0"> {{ $trx->user()->get()->implode('nohp') }}</h5>
+                                                                                                        @if    ($trx->user()->get()->implode('nohp') != null)
+
+                                                                                                        <h5 class= "font-size-14 mb-0"> {{ 
+                                                                                                        $trx->user()->get()->implode('nohp')
+
+                                                                                                         
+                                                                                                            
+                                                                                                            }}</h5>
+                                                                                                            @else
+                                                                                                        <h5 class= "font-size-14 mb-0">Data Kosong</h5>
+                                                                                                        @endif
+                                                                                                            
 
                                                                                                     </td>
                                                                                                 </tr>
