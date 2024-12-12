@@ -23,6 +23,7 @@ class TrxWorkshopController extends Controller
                 'deskripsi' => ['required'],
                 'jenis_kendaraan' => ['required'],
                 'plat_nomor' => ['required'],
+                'gambar'=> ['required'], 
             ]);
             $id = Auth::user()->id;
             $response = TransactionWorkshop::create([
@@ -32,6 +33,7 @@ class TrxWorkshopController extends Controller
                 'deskripsi' => $request->deskripsi,
                 'jenis_kendaraan' => $request->jenis_kendaraan,
                 'plat_nomor' => $request->plat_nomor,
+                'gambar'=> $request->gambar, 
                 'status' => 'pending',
             ]);
             $trx = TransactionWorkshop::find($response->id);

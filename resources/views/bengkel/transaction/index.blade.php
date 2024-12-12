@@ -124,25 +124,33 @@
                                                                                 </div>
                                                                                 <hr class="my-4">
 
-                                                                                <div class="row">
-                                                                                    <div class="col-sm-6">
-                                                                                    </div>
-                                                                                    <div class="col-sm-6">
-                                                                                        <div class="text-muted text-sm-end">
-                                                                                            <div>
-                                                                                                <h5
-                                                                                                    class="font-size-16 mb-1">
-                                                                                                    Pelanggan:</h5>
-                                                                                                <p>{{ optional($trx->user()->first())->name ?? '-' }}
+                                                                                <div class="row align-items-center">
+                                                                                    <div class="text-muted">
+                                                                                        <div>
+                                                                                            <h5 class="font-size-16 mb-1">
+                                                                                                Pelanggan:</h5>
+                                                                                            <p>{{ optional($trx->user()->first())->name ?? '-' }}
+                                                                                            </p>
+                                                                                        </div>
+                                                                                        <div>
+                                                                                            <h5 class="font-size-16 mb-1">
+                                                                                                Tanggal:</h5>
+                                                                                            <p>{{ $trx->created_at->translatedFormat('l, j M Y H:i') }}
+                                                                                            </p>
+                                                                                        </div>
+                                                                                        <div>
+                                                                                            <h5 class="font-size-16 mb-1">
+                                                                                                Foto Transaksi:</h5>
+                                                                                                @if($trx->gambar != null)
+                                                                                                    <img src="{{ asset($trx->gambar) }}"
+                                                                                                    alt="product-img"
+                                                                                                    title="product-img"
+                                                                                                    class="avatar-xl mb-2">
+                                                                                                @else
+                                                                                                <p>
+                                                                                                    Foto tidak ditemukan
                                                                                                 </p>
-                                                                                            </div>
-                                                                                            <div class="mt-4">
-                                                                                                <h5
-                                                                                                    class="font-size-16 mb-1">
-                                                                                                    Tanggal:</h5>
-                                                                                                <p> {{ $trx->created_at->translatedFormat('l, j M Y H:i') }}
-                                                                                                </p>
-                                                                                            </div>
+                                                                                                @endif
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>

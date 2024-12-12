@@ -23,6 +23,7 @@ class TrxBengkelResource extends JsonResource
             'deskripsi' => $this->deskripsi,
             'jenis_kendaraan' => $this->jenis_kendaraan,
             'plat_nomor' => $this->plat_nomor,
+            'gambar'=> $this->gambar, 
             'rating' => $this->rating,
             'status' => $this->status,
             'created_at' => $this->created_at,
