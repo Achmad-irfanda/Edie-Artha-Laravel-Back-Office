@@ -143,8 +143,8 @@
                                                                                                 Foto Transaksi:</h5>
                                                                                                 @if($trx->gambar != null)
                                                                                                     <img src="{{ asset($trx->gambar) }}"
-                                                                                                    alt="product-img"
-                                                                                                    title="product-img"
+                                                                                                    alt="tran-img"
+                                                                                                    title="tran-img"
                                                                                                     class="avatar-xl mb-2">
                                                                                                 @else
                                                                                                 <p>

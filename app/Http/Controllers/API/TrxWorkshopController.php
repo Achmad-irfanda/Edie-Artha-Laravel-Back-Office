@@ -10,6 +10,7 @@ use App\Models\TransactionWorkshop;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TrxBengkelResource;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class TrxWorkshopController extends Controller
 {
@@ -17,18 +18,18 @@ class TrxWorkshopController extends Controller
     {
         DB::beginTransaction();
         try {
-
             $request->validate([
                 'alamat' => ['required', 'string', 'max:255'],
                 'kendala' => ['required', 'string', 'max:255'],
                 'deskripsi' => ['required'],
                 'jenis_kendaraan' => ['required'],
                 'plat_nomor' => ['required'],
-                'gambar'=> ['required'], 
+                'gambar' => ['required', 'image'], // Ensure the file is an image
             ]);
 
             $id = Auth::user()->id;
 
+            // Create the transaction record
             $response = TransactionWorkshop::create([
                 'user_id' => $id,
                 'alamat' => $request->alamat,
@@ -39,25 +40,36 @@ class TrxWorkshopController extends Controller
                 'status' => 'pending',
             ]);
 
-             if($request->hash_file("gambar")){
-                unlink(public_path($response->gambar)); 
-                
-                //-> update
-                $fileName = 'gambar' . $request->kode; 
-                $extension = $request->file('gambar')->getClientOriginalExtension(); 
-                $fileName = $fileName . '-' . time() . "." . $extension; 
+            // Check if the request has a file for 'gambar'
+            if ($request->hasFile('gambar')) {
+                // If there is an existing image, delete it
+                if ($response->gambar) {
+                    // Get the old image path
+                    $oldImagePath = public_path($response->gambar);
+                    if (file_exists($oldImagePath)) {
+                        unlink($oldImagePath);
+                    }
+                }
 
-                $request->file('image')->storeAs('public/uploads/tranBengkel', $fileName); 
-                $url = 'storage/uploads/tranBengkel'; 
+                // Generate a new filename
+                $fileName = 'gambar-' . time() . '.' . $request->file('gambar')->getClientOriginalExtension();
 
+                // Store the new image
+                $path = $request->file('gambar')->storeAs('public/uploads/tranbengkel', $fileName);
+
+                // Generate the public URL for the uploaded file
+                $reqPath = Storage::url($path);
+
+                // Update the response with the new image path
                 $response->update([
-                    'gambar' =>$url
-                ]); 
-             }
-
+                    'gambar' => $reqPath, // Use the generated URL
+                ]);
+            }
 
             $trx = TransactionWorkshop::find($response->id);
+
             DB::commit();
+
             return ResponseFormatter::success([
                 'transaction' =>  $trx,
             ], 'Transaction Stored');
