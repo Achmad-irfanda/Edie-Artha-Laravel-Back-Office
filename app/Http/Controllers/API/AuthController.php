@@ -51,6 +51,7 @@ class AuthController extends Controller
             $user = User::where('email', $request->email)->first();
 
             $tokenResult = $user->createToken('authToken')->plainTextToken;
+            
             DB::commit();
             return ResponseFormatter::success([
                 'access_token' => $tokenResult,

@@ -17,6 +17,7 @@ class TrxWorkshopController extends Controller
     {
         DB::beginTransaction();
         try {
+
             $request->validate([
                 'alamat' => ['required', 'string', 'max:255'],
                 'kendala' => ['required', 'string', 'max:255'],
@@ -25,7 +26,9 @@ class TrxWorkshopController extends Controller
                 'plat_nomor' => ['required'],
                 'gambar'=> ['required'], 
             ]);
+
             $id = Auth::user()->id;
+
             $response = TransactionWorkshop::create([
                 'user_id' => $id,
                 'alamat' => $request->alamat,
@@ -33,14 +36,32 @@ class TrxWorkshopController extends Controller
                 'deskripsi' => $request->deskripsi,
                 'jenis_kendaraan' => $request->jenis_kendaraan,
                 'plat_nomor' => $request->plat_nomor,
-                'gambar'=> $request->gambar, 
                 'status' => 'pending',
             ]);
+
+             if($request->hash_file("gambar")){
+                unlink(public_path($response->gambar)); 
+                
+                //-> update
+                $fileName = 'gambar' . $request->kode; 
+                $extension = $request->file('gambar')->getClientOriginalExtension(); 
+                $fileName = $fileName . '-' . time() . "." . $extension; 
+
+                $request->file('image')->storeAs('public/uploads/tranBengkel', $fileName); 
+                $url = 'storage/uploads/tranBengkel'; 
+
+                $response->update([
+                    'gambar' =>$url
+                ]); 
+             }
+
+
             $trx = TransactionWorkshop::find($response->id);
             DB::commit();
             return ResponseFormatter::success([
                 'transaction' =>  $trx,
             ], 'Transaction Stored');
+            
         } catch (Exception $error) {
             DB::rollBack();
             return ResponseFormatter::error([
