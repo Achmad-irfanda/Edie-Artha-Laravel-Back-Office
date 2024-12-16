@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('title')
     Sparepart
+    
 @endsection
 @section('css')
     <!-- DataTables -->
